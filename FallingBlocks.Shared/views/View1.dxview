@@ -1,0 +1,67 @@
+<div data-options="dxView : { name: 'View1', title: 'Falling Blocks' } ">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <!--<div class="dx-field">
+            <div class="dx-field-label">Score</div>
+            <div class="dx-field-value" data-bind="dxTextBox: {value: score}"></div>
+        </div>-->
+        <!--<div class="dx-field">
+            <div class="dx-field-label">Info</div>
+            <div class="dx-field-value" data-bind="dxTextBox: {value: info}"></div>
+        </div>-->
+        <!--<div class="dx-field">
+            <div class="dx-field-label">Level</div>
+            <div class="dx-field-value" data-bind="dxTextBox: {value: blevel}"></div>
+        </div>
+        <div class="dx-field">
+            <div class="dx-field-label">Lines</div>
+            <div class="dx-field-value" data-bind="dxTextBox: {value: lines}"></div>
+        </div>-->
+        <!--<div data-bind="dxButton: { text: 'Start', clickAction: startClicked }"></div>
+        <div data-bind="dxButton: { text: 'Pause', clickAction: pauseClicked }"></div>-->
+        <!--<div data-bind="dxButton: { text: 'Left', clickAction: leftClicked }"></div>
+        <div data-bind="dxButton: { text: 'Rotate', clickAction: rotateClicked }"></div>
+        <div data-bind="dxButton: { text: 'Right', clickAction: rightClicked }"></div>
+        <div data-bind="dxButton: { text: 'Down', clickAction: downClicked }"></div>-->
+        <!--<div data-bind="dxButton: { text: 'About', clickAction: aboutClicked }"></div>
+        <div data-bind="dxButton: { text: 'Help', clickAction: helpClicked }"></div>
+        <div data-bind="dxButton:{text: 'Show overlay', clickAction: showOverlay}"></div>-->
+
+        <div id="tetris" style="width: 100%; height: 100%;"></div>
+
+        <div id='topToolbar' data-bind="dxToolbar:{dataSource: topToolbarItems}"></div>
+        <div id='bottomToolbar' data-bind="dxToolbar:{dataSource: bottomToolbarItems}"></div>
+
+        <div id="toastContainer" data-bind="dxToast:{message: info, type:'info', displayTime: 3000 }"></div>
+        <div id="overlayContainer" data-bind="dxOverlay: { visible: overlayVisible }">
+            <!--<div class="dx-field">
+                <div class="dx-field-label">Left</div>
+                <div class="dx-field-value" data-bind="dxTextBox: {value: l}"></div>
+            </div>
+            <div class="dx-field">
+                <div class="dx-field-label">Rotate</div>
+                <div class="dx-field-value" data-bind="dxTextBox: {value: rot}"></div>
+            </div>
+            <div class="dx-field">
+                <div class="dx-field-label">Right</div>
+                <div class="dx-field-value" data-bind="dxTextBox: {value: r}"></div>
+            </div>
+            <div class="dx-field">
+                <div class="dx-field-label">Down</div>
+                <div class="dx-field-value" data-bind="dxTextBox: {value: down}"></div>
+            </div>
+            <div class="dx-field">
+                <div class="dx-field-label">Pause</div>
+                <div class="dx-field-value" data-bind="dxTextBox: {value: p}"></div>
+            </div>-->
+            <div class="dx-field">
+                <div class="dx-field-label">Speed</div>
+                <div class="dx-field-value" data-bind="dxSelectBox: { dataSource: speeds, displayExpr: 'option', valueExpr: 'id', value: level }"></div>
+            </div>
+            <div class="dx-field">
+                <div class="dx-field-label">Accelerometer</div>
+                <div class="dx-field-value" data-bind="dxCheckBox: { checked: accelerometer }"></div>
+            </div>
+            <div class="button" data-bind="dxButton: { text: 'Hide', clickAction: hideOverlay }"></div>
+        </div>
+    </div>
+</div>

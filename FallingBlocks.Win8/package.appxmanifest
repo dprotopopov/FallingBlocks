@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="64189RBADESIGNLLC.FallingBlocks" Version="1.0.0.0" Publisher="CN=AF4638CB-3520-4C8D-AF2C-2103D90E5744" />
+  <Properties>
+    <DisplayName>Falling Blocks</DisplayName>
+    <PublisherDisplayName>RBA DESIGN LLC</PublisherDisplayName>
+    <Logo>images\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="FallingBlocks.Win8" StartPage="index.html">
+      <VisualElements DisplayName="Falling Blocks" Logo="images\Square150x150Logo.png" SmallLogo="images\Square30x30Logo.png" Description="Inspired by Tetris™ game." ForegroundText="light" BackgroundColor="#464646">
+        <DefaultTile ShowName="logoOnly" WideLogo="images\Wide310x150Logo.png" />
+        <SplashScreen Image="images\splashscreen.png" />
+        <InitialRotationPreference>
+          <Rotation Preference="portrait" />
+          <Rotation Preference="portraitFlipped" />
+        </InitialRotationPreference>
+      </VisualElements>
+    </Application>
+  </Applications>
+</Package>

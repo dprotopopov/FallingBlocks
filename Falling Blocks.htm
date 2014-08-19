@@ -1,0 +1,884 @@
+
+<!-- saved from url=(0042)http://www.seamons.com/projects/js/blocks/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>Falling Blocks</title>
+<!--    Falling Blocks (Formerly known as SUPER WEBTris)
+          by Paul Seamons. I will make
+	  no attempt to copyright this coding or the graphics but I would ask that
+	  if any portion of my scripting is used on another
+	  program, that some credit be given for the portion that
+	  is borrowed.
+//*   -->
+</head>
+<body background="./Falling Blocks_files/back2.gif" link="dodgerblue" text="lightsteelblue"><center><font size="2">To skip to a level that you have passed type qq# in the Info window<br>where "#" represents the level you would like to go to!!</font></center>
+<script language="JavaScript">
+<!--
+document.write("<img src=blue.gif height=1 width=1><br>");
+
+var swapable = (navigator.appCodeName=='Mozilla' && 3<=navigator.appVersion.charAt(0));
+var nn3 = (3==navigator.appVersion.charAt(0));
+var is_konqueror = navigator.appName.toLowerCase().indexOf('konqueror') != -1;
+
+// konqueror tries to translate images to the full path
+var rel = '';
+if (is_konqueror) rel = location.href.substring(0, location.href.lastIndexOf('/') + 1)
+
+var x   = 0;
+var y   = 0;
+var z   = 1;
+var t   = 0;
+var tt  = 0;
+var pix = 15;
+var spd = 500;
+var spd2= 20;
+var spdh= 10;
+var sp  = 10;
+var l   = 'j';
+var rot = 'k';
+var r   = 'l';
+var down= ',';
+var p   = 'p';
+var blv = 1;
+var lns = 0;
+var ptb = 5;
+var ptl = 100;
+var acl = 10;
+var rindex      = 0;
+var boardlevel  = 0;
+var paused      = false;
+var nonew       = false;
+var getnew      = true;
+var started     = false;
+var gameover    = false;
+var movebad     = false;
+var dontgo      = true;
+var bomb        = false;
+var current     = new Array();
+var blckfilled  = new Array();
+var hold                = new Array();
+var lines               = new Array();
+
+if(swapable){
+whtblck =       new Image();
+whtblck.src=    rel + "white.gif";
+endblck =       new Image();
+endblck.src=    rel + "black.gif";
+explode =       new Image();
+explode.src=    rel + "explode.gif";
+};
+
+//*  Definition of the objects for use in the game.;
+function addto(which,zero,one,two,three){;
+which[0]  = zero;
+which[1] = one;
+which[2] = two;
+which[3] = three;
+};
+
+obj0     =      new Array();     //* Bomb block;
+obj0[0] =       new Array();
+addto(obj0[0],-1,0,1,2);
+obj0[1] =       new Array();
+addto(obj0[1],-20,-10,0,10);
+obj0[2] =       new Array();
+addto(obj0[2],0,1,-9,-19);
+obj0[3] =       new Array();
+addto(obj0[3],-10,-9,0,1);
+obj0[4] =       new Image();
+obj0[4].src     = rel + "bomb.gif";
+
+obj1    =       new Array();     //* Left Offset block;
+obj1[0] =       new Array();
+addto(obj1[0],11,10,0,-1);
+obj1[1] =       new Array();
+addto(obj1[1],19,10,9,0);
+obj1[2] =       new Array();
+obj1[2] = obj1[0];
+obj1[3] =       new Array();
+obj1[3] = obj1[1];
+obj1[4] =       new Image();
+obj1[4].src     = rel + "red.gif";
+
+obj2    = new Array();            //* Long block;
+obj2[0] = new Array();
+addto(obj2[0],2,1,0,-1);
+obj2[1] =       new Array();
+addto(obj2[1],20,10,0,-10);
+obj2[2] =       new Array();
+obj2[2] = obj2[0];
+obj2[3] =       new Array();
+obj2[3] = obj2[1];
+obj2[4] =       new Image();
+obj2[4].src     = rel + "blue.gif";
+
+obj3    = new Array();            //* Right Offset block;
+obj3[0] =       new Array();
+addto(obj3[0],10,9,1,0);
+obj3[1] =       new Array();
+addto(obj3[1],11,1,0,-10);
+obj3[2] =       new Array();
+obj3[2] = obj3[0];
+obj3[3] =       new Array();
+obj3[3] = obj3[1];
+obj3[4] =       new Image();
+obj3[4].src     = rel + "purple.gif";
+
+obj4    = new Array();            //* L Block;
+obj4[0] = new Array();
+addto(obj4[0],10,2,1,0);
+obj4[1] = new Array();
+addto(obj4[1],12,2,-8,-9);
+obj4[2] = new Array();
+addto(obj4[2],2,1,0,-8);
+obj4[3] = new Array();
+addto(obj4[3],11,10,0,-10);
+obj4[4] = new Image();
+obj4[4].src     = rel + "orange.gif";
+
+obj5    = new Array();            //* Reverse L block;
+obj5[0] = new Array();
+addto(obj5[0],12,2,1,0);
+obj5[1] = new Array();
+addto(obj5[1],12,11,2,-8);
+obj5[2] = new Array();
+addto(obj5[2],2,1,0,-10);
+obj5[3] = new Array();
+addto(obj5[3],10,0,-9,-10);
+obj5[4] = new Image();
+obj5[4].src     = rel + "yellow.gif";
+
+obj6    = new Array();            //* Odd block;
+obj6[0] = new Array();
+addto(obj6[0],10,1,0,-1);
+obj6[1] = new Array();
+addto(obj6[1],10,0,-1,-10);
+obj6[2] = new Array();
+addto(obj6[2],1,0,-1,-10);
+obj6[3] = new Array();
+addto(obj6[3],10,1,0,-10);
+obj6[4] = new Image();
+obj6[4].src     = rel + "cyan.gif";
+
+obj7    = new Array();            //* Square block;
+obj7[0] = new Array();
+addto(obj7[0],11,10,1,0);
+obj7[1] = new Array();
+obj7[1] = obj7[0];
+obj7[2] = new Array();
+obj7[2] = obj7[0];
+obj7[3] = new Array();
+obj7[3] = obj7[0];
+obj7[4]         = new Image();
+obj7[4].src     = rel + "green.gif";
+
+
+document.write("<table border=0 cellpadding=4 cellspacing=10 valign = middle>");
+document.write("<tr><td width=50></td><td bgcolor=lightslategray rowspan=2><center>");
+
+if (swapable){;
+for (y=-2;y<20;y++){;
+for (x=0;x<10;x++){;
+document.write("<a href=#top>");
+document.write("<img name='" +z+ "' src='white.gif' border=0 width="+pix+" height="+pix+">");
+document.write("</a>");
+blckfilled[z] = 0;
+z += 1;
+};
+document.write("<br>");
+};
+
+if (!swapable) document.write("<table><tr><td>Sorry.  But this game is heavily dependant upon having Netscape 3.01 or higher.</td></tr></table>");
+
+};
+document.write("</center></td><td valign=middle align=center>");
+for (one=0;one<10;one++){; blckfilled[z] = 1; z += 1; };
+
+var bs = '<img src=webtris2.gif alt="Falling Blocks" width=182 height=81><p>';
+bs += '<form name="buttons">';
+bs += 'Level: <input type="text" name="blevel" value="1" size=2> Lines: <input type="text" name="lines" value="0" size=3><br>';
+bs += 'Score: <input type="text" name="scoreboard" value="0" size=6><p>';
+bs += '<input type="button" value="Start" onClick=startme() name="s">';
+bs += '<input type="button" value="Pause" onClick=pause() name="p"><br>';
+bs += '<input type="button" value="  Left " onClick=move(-1)>';
+bs += '<input type="button" value="Rotate" onClick=rotate("l")>';
+bs += '<input type="button" value="Right" onClick=move(1)><br>';
+bs += '<input type="button" value="Down" onClick=move(10)><p>';
+bs += '<input type="button" value="About" onClick=describe(about)>';
+bs += '<input type="button" value="Why?" onClick=describe(why)>';
+bs += '<input type="button" value="Help" onClick=describe(help)><br>';
+bs += '<font size=2><i>By <a href=/projects/>Paul Seamons</a></i></font>';
+bs += "</center></td><td>";
+
+
+bs += "<textarea name='info' rows=6 cols=24 wrap=virtual scrolling=no>Updated Jan, 1998       (14 Levels)             Now with keyboard option!</textarea><p>";
+bs += "Speed: <select name='level' size=1><option>Just learning!<option selected>Beginner<option>Intermediate<option>Expert<option>Suicide<option>Ya! Right!</select> <input type=text value='' size=2 name='inp' " +(nn3?"onchange=inpu()":"onKeyPress=inpu(event)") +"><p>";
+bs += "<center><table border=1 cellspacing=0 cellpadding=1><tr><td align=center>  Keyboard Play  <br></td></tr>"
+bs += "<tr><td><center>Left Rotate Right<br>";
+bs += "<input type='text' value='j' name='l' size=2>  <input type='text' value='k' name='rot' size=2>  <input type='text' value='l' name='r' size=2><br>";
+bs += "Down <input type='text' value=',' name='down' size=2></center></td></tr></table></center>";
+bs += "</form></td></tr></table>";
+document.write(bs);
+
+
+function startme(){;
+if (nonew) return;
+nonew = true;
+var xx = document.buttons.info.value;
+if (xx.indexOf("qq")!=-1){;
+var zz = xx.indexOf("qq");
+blv = parseInt(xx.charAt(zz+2));
+};
+getlevel();
+gameover = false;
+paused = false;
+writelevel();
+if(!started){;
+document.buttons.scoreboard.value="0";
+};
+lns=0;
+document.buttons.lines.value=lns;
+document.buttons.info.value = "Falling Blocks           by Paul Seamons ";
+l=document.buttons.l.value;
+rot=document.buttons.rot.value;
+r=document.buttons.r.value;
+down=document.buttons.down.value;
+document.buttons.inp.focus();
+spdh=spd/spd2-10;
+newobj();
+};
+
+function finished(){;
+
+nonew = false;
+
+started = false;
+
+for(one=219;one>-1;one--){;
+
+if(document.images[one+1].src==whtblck.src){;
+
+document.images[one+1].src = explode.src;
+
+};
+
+};
+
+if(lna==blv){;
+
+document.buttons.info.value = "You have defeated Falling Blocks!  You ARE a GURU!!";
+
+};
+
+document.buttons.info.value += "        Your Game is Over!!!                          Your Score was " + document.buttons.scoreboard.value + "           Click on Start to retry this level....  or click on Reload to Start Over.";
+
+return;
+
+};
+
+
+
+
+
+function newobj(){;
+
+if (lns>=20){
+
+nextlevel();
+
+return;
+
+}
+
+y = 24;
+
+rindex = 0;
+
+dontgo = false;
+
+rand();
+
+for (one=0;one<4;one++){;
+
+t = y + current[rindex][one];
+
+if (blckfilled[t]==1) gameover = true;
+
+document.images[t+1].src = current[4].src;
+
+};
+
+getnew = false;
+
+if(started) return;
+
+started = true;
+
+goDown();
+
+};
+
+
+
+
+
+function pause(){;
+
+if (!started) return;
+
+if (!paused){;
+
+paused = true;
+
+document.buttons.info.value += "        Press Pause to Continue ";
+return;
+
+};
+
+paused = false;
+document.buttons.inp.focus();
+
+document.buttons.info.value = "Falling Blocks           by Paul Seamons ";
+goDown();
+
+};
+
+
+
+
+
+function goDown(){;
+if(paused) {; document.buttons.p.focus(); return; };
+sp +=1;
+document.buttons.inp.blur();
+document.buttons.inp.focus();
+if (sp>spdh){;
+
+if (gameover){;
+
+finished();
+
+return;
+
+};
+
+if (paused) return; 
+
+move(10);
+
+if (getnew) newobj();
+sp=0;
+};
+setTimeout('goDown()',spd2);
+
+};
+
+var keypress = function (ev) {
+  var E = ev || window.event;
+  if (! E || E.ctrlKey) return;
+  var key = E.which || E.keyCode;
+  inpu(String.fromCharCode(key).toLowerCase());
+}
+
+if (is_konqueror) document.onkeydown  = keypress;
+else              document.onkeypress = keypress;
+
+<!-- Thanks to Peter Williams, this game will play much better on Communicator //-->
+function inpu(eventKey){
+  if (dontgo) return;
+  var xx = '';
+  if(nn3) xx = document.buttons.inp.value;
+  else    xx = eventKey;
+
+document.buttons.inp.value='';
+if(xx==l) move(-1);
+if(xx==rot) rotate("l");
+if(xx==r) move(1);
+if(xx==down) move(10);
+if(xx==p) pause();
+};
+
+
+
+
+
+function rand(){;
+
+bomb = false;
+
+var which = Math.random();
+
+which *= 8;
+
+which = Math.floor(which);
+
+if (which == 0){;
+
+bomb = true;
+
+};
+
+which = which / 1
+
+current = eval("obj" + which);
+
+return;
+
+};
+
+
+
+
+
+function move(way){;
+
+if (paused) return;
+
+if (dontgo) return;
+
+dontgo = true;
+
+for (one=0;one<4;one++){;
+
+hold[one] = y + way + current[rindex][one];
+
+};
+
+canmove(hold,way);
+
+if (movebad){;
+
+movebad=false;
+
+if(way==1||way==-1){;
+
+dontgo = false;
+
+return;
+
+};
+
+if(bomb){;
+
+bomblines(hold);
+
+getnew = true;
+
+return;
+
+};
+
+filledline(hold);
+
+getnew = true;
+
+return;
+
+};
+
+for (one=0;one<4;one++){;
+
+t = y + current[rindex][one];
+
+document.images[t+1].src = whtblck.src;
+
+};
+
+y += way;
+
+for (one=0;one<4;one++){;
+
+t = y + current[rindex][one];
+
+document.images[t+1].src = current[4].src;
+
+};
+
+dontgo = false;
+
+};
+
+
+
+
+
+function rotate(){;
+
+if (paused) return;
+
+if (dontgo) return;
+
+for (one=0;one<4;one++){;
+
+var rr = rindex - 1;
+
+if (rr==-1) rr=3;
+
+t = y + current[rr][one];
+
+var tt = y + current[rindex][one];
+
+hold[one] = t;
+
+t = t-(Math.floor(t*.1))*10;
+
+tt = tt-(Math.floor(tt*.1))*10;
+
+if ((Math.min(t,tt)==0 || Math.min(t,tt)==1) && (Math.max(t,tt)==9 || Math.max(t,tt)==8)) movebad = true;
+
+};
+
+canmove(hold,0);
+
+if (movebad){;
+
+movebad = false;
+
+return;
+
+};
+
+for (one=0;one<4;one++){;
+
+t = y + current[rindex][one];
+
+document.images[t+1].src = whtblck.src;
+
+};
+
+rindex -= 1;
+
+if (rindex==-1) rindex=3;
+
+for (one=0;one<4;one++){;
+
+t = y + current[rindex][one];
+
+document.images[t+1].src = current[4].src;
+
+};
+
+};
+
+
+
+
+
+function canmove(hold,way){;
+
+for(one=0;one<4;one++){;
+
+t = hold[one];
+
+if (blckfilled[t] == 1) movebad = true;
+
+};
+
+if (way==-1){;
+
+for (one=0;one<4;one++){;
+
+t = hold[one];
+
+t = t-(Math.floor(t*.1))*10;
+
+if (t==9) movebad = true;
+
+};
+
+};
+
+if (way==1){;
+
+for (one=0;one<4;one++){;
+
+t = hold[one];
+
+t = t-(Math.floor(t*.1))*10;
+
+if (t==0) movebad = true;
+
+};
+
+};
+
+};
+
+
+
+
+
+function filledline(hold){;
+
+for(one=0;one<4;one++){;
+
+t = hold[one] - 10;
+
+blckfilled[t] = 1;
+
+var integer = Math.floor((t * .1));
+
+lines[integer] += blckfilled[t];
+
+};
+
+x = 0;
+
+for (one=3;one<23;one++){;
+
+if (lines[one]==10) x += 1;
+
+};
+
+for (three=0;three<=x;three++){;
+
+removeline();
+
+};
+
+document.buttons.scoreboard.value = ptb + parseInt(document.buttons.scoreboard.value);
+
+if (x==4){;
+
+document.buttons.scoreboard.value = 1000 + parseInt(document.buttons.scoreboard.value);
+
+};
+
+return;
+
+};
+
+
+
+	
+
+function bomblines(hold){;
+
+for(one=0;one<4;one++){;
+
+t = hold[one] - 10;
+
+var integer = Math.floor((t * .1));
+
+lines[integer] = 10;
+
+};
+
+x = 0;
+
+for (one=3;one<23;one++){;
+
+if (lines[one]==10) x += 1;
+
+};
+
+for (hh=0;hh<=x;hh++){;
+
+removeline();
+
+};
+
+document.buttons.scoreboard.value = ptb + parseInt(document.buttons.scoreboard.value);
+
+return;
+
+};
+
+
+
+
+
+function removeline(){;
+
+for (one=2;one<22;one++){;
+
+if (lines[one]==10){;
+
+var change = (one * 10) + 9;
+
+if (bomb){
+
+for (two=change;two>(change-10);two--){;
+
+document.images[two+1].src = explode.src;
+
+}; };
+
+for (two=change;two>9;two--){;
+
+var twom = two - 10;
+
+document.images[two+1].src = document.images[twom+1].src;
+
+blckfilled[two] = blckfilled[twom];
+
+};
+
+if(!bomb){;
+
+document.buttons.scoreboard.value = ptl + parseInt(document.buttons.scoreboard.value);
+
+};
+
+lns += 1
+
+document.buttons.lines.value = lns;
+
+spd -= acl;
+
+for (two=one;two>3;two--){;
+
+var twom = two - 1;
+
+lines[two] = lines[twom];
+
+};
+
+return;
+
+};
+
+};
+
+return;
+
+};
+
+
+
+
+
+function nextlevel(){;
+
+for(one=219;one>-1;one--){;
+
+if(document.images[one+1].src==whtblck.src){;
+
+document.images[one+1].src=explode.src;
+
+};
+
+document.buttons.scoreboard.value = ptb + parseInt(document.buttons.scoreboard.value);
+
+};
+
+nonew=false;
+
+blv += 1
+
+if(blv==lna){;
+
+gameover=true;
+
+finished();
+
+return;
+
+};
+
+document.buttons.blevel.value = blv;
+
+startme();
+
+return;
+
+};
+
+function writelevel(){;
+var pixels = "";
+if(blv>=lna) finished();
+var lv = eval("lvi" + blv);
+for(one=1;one<25;one++){;
+lines[one] = 0;
+};
+for(one=0;one<20;one++){;
+t = lv.charAt(one);
+pixels = "" + pixels + eval("pxi"+ t);
+};
+z=0;
+for(one=0;one<20;one++){;
+document.images[z+1].src = whtblck.src;
+blckfilled[z]=0;
+z+=1;
+};
+for(one=0;one<200;one++){;
+if(pixels.charAt(one)=='0'){;
+document.images[z+1].src = whtblck.src;
+blckfilled[z]= 0;
+z+=1
+} else {;
+document.images[z+1].src = endblck.src;
+blckfilled[z] = 1;
+z+=1
+};
+};
+for(one=0;one<10;one++){;
+blckfilled[z]=1;
+z+=1;
+};
+for(one=3;one<25;one++){;
+for(two=0;two<10;two++){;
+var tw = parseInt("" + one + two);
+lines[one] += blckfilled[tw];
+};
+};
+return;
+};
+
+function getlevel(){;
+if (document.buttons.level[0].selected) {;spd=600; acl=5; ptl=75; ptb=5; };
+if (document.buttons.level[1].selected) {;spd=500; acl=5; ptl=100; ptb=5; };
+if (document.buttons.level[2].selected) {;spd=400; acl=5; ptl=150; ptb=10; };
+if (document.buttons.level[3].selected) {;spd=300; acl=3; ptl=200; ptb=10; };
+if (document.buttons.level[4].selected) {;spd=266; acl=3; ptl=300; ptb=20; };
+if (document.buttons.level[5].selected) {;spd=233; acl=3; ptl=500; ptb=20; };
+};
+
+function describe(which){;
+document.buttons.info.value = which;
+};
+
+
+var about = "Falling Blocks by Paul Seamons.  Tell your friends!  Tip- Once the page has finished loading you can unhook from your modem (save ISP charges)."
+var help = "Finish twenty lines and you progress to a new level.  Try rotating bombs to different shapes.  You can redefine the keys before you press 'Start'.  Press 'p' to pause."
+var why = "Because Java Applets are nice but bulky.  Anti Applets and Cookies"
+
+
+var lvi1  = "0000000000000111223b";
+var lvi2  = "11111111111111111111";
+var lvi3  = "0000000000000bb22222";
+var lvi4  = "00000000000888000000";
+var lvi5  = "22222222222222222222";
+var lvi6  = "0000000000766554123b";
+var lvi7  = "00000000880000990000";
+var lvi8  = "33333333333333333333";
+var lvi10 = "0000000a5555a7add766";
+var lvi9  = "00000000007654b44ccc";
+var lvi11 = "0000000000eeeeeeeeee";
+var lvi12 = "0000000000efefefefef";
+var lvi14 = "30303030303030303030";
+var lvi13 = "00300003000300303030";
+var lna = 14 + 1;
+var pxi0 = "0000000000";
+var pxi1 = "1000000001";
+var pxi2 = "1100000011";
+var pxi3 = "1110000111";
+var pxi4 = "0100000010";
+var pxi5 = "0010000100";
+var pxi6 = "0001001000";
+var pxi7 = "0000110000";
+var pxi8 = "1111111000";
+var pxi9 = "0001111111";
+var pxia = "0001111000";
+var pxib = "1111001111";
+var pxic = "0100110010";
+var pxid = "0010110100";
+var pxie = "0101010101";
+var pxif = "1010101010";
+document.buttons.s.focus();
+//*  -->
+
+</script><img src="./Falling Blocks_files/blue.gif" height="1" width="1"><br><table border="0" cellpadding="4" cellspacing="10" valign="middle"><tbody><tr><td width="50"></td><td bgcolor="lightslategray" rowspan="2"><center><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="1" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="2" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="3" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="4" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="5" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="6" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="7" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="8" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="9" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="10" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="11" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="12" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="13" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="14" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="15" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="16" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="17" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="18" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="19" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="20" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="21" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="22" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="23" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="24" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="25" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="26" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="27" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="28" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="29" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="30" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="31" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="32" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="33" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="34" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="35" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="36" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="37" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="38" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="39" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="40" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="41" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="42" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="43" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="44" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="45" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="46" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="47" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="48" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="49" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="50" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="51" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="52" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="53" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="54" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="55" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="56" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="57" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="58" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="59" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="60" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="61" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="62" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="63" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="64" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="65" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="66" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="67" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="68" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="69" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="70" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="71" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="72" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="73" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="74" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="75" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="76" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="77" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="78" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="79" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="80" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="81" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="82" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="83" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="84" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="85" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="86" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="87" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="88" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="89" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="90" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="91" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="92" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="93" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="94" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="95" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="96" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="97" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="98" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="99" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="100" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="101" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="102" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="103" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="104" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="105" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="106" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="107" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="108" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="109" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="110" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="111" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="112" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="113" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="114" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="115" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="116" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="117" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="118" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="119" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="120" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="121" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="122" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="123" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="124" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="125" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="126" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="127" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="128" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="129" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="130" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="131" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="132" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="133" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="134" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="135" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="136" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="137" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="138" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="139" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="140" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="141" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="142" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="143" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="144" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="145" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="146" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="147" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="148" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="149" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="150" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="151" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="152" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="153" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="154" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="155" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="156" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="157" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="158" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="159" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="160" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="161" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="162" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="163" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="164" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="165" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="166" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="167" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="168" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="169" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="170" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="171" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="172" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="173" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="174" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="175" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="176" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="177" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="178" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="179" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="180" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="181" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="182" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="183" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="184" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="185" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="186" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="187" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="188" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="189" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="190" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="191" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="192" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="193" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="194" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="195" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="196" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="197" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="198" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="199" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="200" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="201" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="202" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="203" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="204" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="205" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="206" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="207" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="208" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="209" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="210" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="211" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="212" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="213" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="214" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="215" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="216" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="217" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="218" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="219" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><a href="http://www.seamons.com/projects/js/blocks/#top"><img name="220" src="./Falling Blocks_files/white.gif" border="0" width="15" height="15"></a><br></center></td><td valign="middle" align="center"><img src="./Falling Blocks_files/webtris2.gif" alt="Falling Blocks" width="182" height="81"><p></p><form name="buttons">Level: <input type="text" name="blevel" value="1" size="2"> Lines: <input type="text" name="lines" value="0" size="3"><br>Score: <input type="text" name="scoreboard" value="0" size="6"><p><input type="button" value="Start" onclick="startme()" name="s"><input type="button" value="Pause" onclick="pause()" name="p"><br><input type="button" value="  Left " onclick="move(-1)"><input type="button" value="Rotate" onclick="rotate(&quot;l&quot;)"><input type="button" value="Right" onclick="move(1)"><br><input type="button" value="Down" onclick="move(10)"></p><p><input type="button" value="About" onclick="describe(about)"><input type="button" value="Why?" onclick="describe(why)"><input type="button" value="Help" onclick="describe(help)"><br><font size="2"><i>By <a href="http://www.seamons.com/projects/">Paul Seamons</a></i></font></p></form></td><td><textarea name="info" rows="6" cols="24" wrap="virtual" scrolling="no">Updated Jan, 1998       (14 Levels)             Now with keyboard option!</textarea><p>Speed: <select name="level" size="1"><option>Just learning!</option><option selected="">Beginner</option><option>Intermediate</option><option>Expert</option><option>Suicide</option><option>Ya! Right!</option></select> <input type="text" value="" size="2" name="inp" onkeypress="inpu(event)"></p><p></p><center><table border="1" cellspacing="0" cellpadding="1"><tbody><tr><td align="center">&nbsp;&nbsp;Keyboard Play&nbsp;&nbsp;<br></td></tr><tr><td><center>Left Rotate Right<br><input type="text" value="j" name="l" size="2">&nbsp;&nbsp;<input type="text" value="k" name="rot" size="2">&nbsp;&nbsp;<input type="text" value="l" name="r" size="2"><br>Down <input type="text" value="," name="down" size="2"></center></td></tr></tbody></table></center></td></tr></tbody></table>
+
+
+
+</body></html>
