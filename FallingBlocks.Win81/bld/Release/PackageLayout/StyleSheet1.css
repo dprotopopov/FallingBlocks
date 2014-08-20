@@ -1,0 +1,26 @@
+﻿#tetris {
+    font-size: 0;
+    display: table;
+}
+
+#tetris center {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#tetris a, #tetris a img {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+#topToolbar {
+    position:absolute; 
+    top:0;
+}
+
+#bottomToolbar {
+    position:absolute; 
+    bottom:0;
+}

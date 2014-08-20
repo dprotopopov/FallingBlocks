@@ -8,6 +8,7 @@
 }
 
 /* Windows phone 8 */
+
 .dx-theme-win8 .pivot-layout {
     height: 100%;
     position: relative;
@@ -19,21 +20,19 @@
 }
 
 .dx-theme-win8 .pivot-layout .dx-toolbar.layout-toolbar-bottom {
-    position: absolute;
     bottom: 0;
+    position: absolute;
     width: 100%;
 }
 
 .dx-theme-win8 .pivot-layout .layout-footer {
-    position: absolute;
     bottom: 0;
-    width: 100%;
     height: 0;
+    position: absolute;
+    width: 100%;
 }
 
-.dx-theme-win8 .pivot-layout.has-toolbar-bottom .layout-footer {
-    height: 40px;
-}
+.dx-theme-win8 .pivot-layout.has-toolbar-bottom .layout-footer { height: 40px; }
 
 
 .dx-theme-win8 .navbar-layout-phone .layout-content {
@@ -42,15 +41,12 @@
 }
 
 .dx-theme-win8 .has-toolbar-bottom .dx-pivot {
-    overflow: hidden;
-    width: 100%;
-    height: auto;
-    top: 0;
     bottom: 40px;
+    height: auto;
+    overflow: hidden;
     position: absolute;
+    top: 0;
+    width: 100%;
 }
 
-.dx-theme-win8 .navbar-layout-phone .layout-header .dx-toolbar {
-    opacity: 1;
-}
-
+.dx-theme-win8 .navbar-layout-phone .layout-header .dx-toolbar { opacity: 1; }

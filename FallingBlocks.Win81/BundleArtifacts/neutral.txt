@@ -1,0 +1,3 @@
+MainPackage=D:\Projects\FallingBlocks\FallingBlocks.Win81\bin\Release\FallingBlocks.Win81_1.1.0.0_Bundle\FallingBlocks.Win81_1.1.0.0_AnyCPU.appx
+ResourcePack=D:\Projects\FallingBlocks\FallingBlocks.Win81\bin\Release\FallingBlocks.Win81_1.1.0.0_Bundle\FallingBlocks.Win81_1.1.0.0_scale-140.appx
+ResourcePack=D:\Projects\FallingBlocks\FallingBlocks.Win81\bin\Release\FallingBlocks.Win81_1.1.0.0_Bundle\FallingBlocks.Win81_1.1.0.0_scale-180.appx

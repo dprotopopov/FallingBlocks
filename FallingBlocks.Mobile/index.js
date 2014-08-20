@@ -1,4 +1,4 @@
-
+﻿
 $(function() {
     var startupView = "View1";
 

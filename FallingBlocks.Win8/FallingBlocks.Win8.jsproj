@@ -49,6 +49,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <PackageCertificateKeyFile>FallingBlocks.Win8_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>3C5B0C25372187BE1145E87E713C5A85B5033342</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest">
@@ -64,6 +65,18 @@
     </Content>
     <Content Include="..\FallingBlocks.Shared\bomb.gif">
       <Link>bomb.gif</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallingBlocks.Shared\bower_components\hammerjs\hammer.min.js">
+      <Link>bower_components\hammerjs\hammer.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallingBlocks.Shared\bower_components\hammerjs\hammer.min.map">
+      <Link>bower_components\hammerjs\hammer.min.map</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallingBlocks.Shared\bower_components\html5shiv\dist\html5shiv.min.js">
+      <Link>bower_components\html5shiv\dist\html5shiv.min.js</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\FallingBlocks.Shared\css\dx.android.holo-dark.css">
@@ -290,6 +303,10 @@
       <Link>Resources\PackageIcons.iOS.iTunesArtwork.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\FallingBlocks.Shared\Resources\PackageIcons.Tizen.icon_117_117.png">
+      <Link>Resources\PackageIcons.Tizen.icon_117_117.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\FallingBlocks.Shared\Resources\PackageIcons.WP.ApplicationIcon_99_99.png">
       <Link>Resources\PackageIcons.WP.ApplicationIcon_99_99.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -384,6 +401,8 @@
     <Content Include="views\readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bower_components\hammerjs\" />
+    <Folder Include="bower_components\html5shiv\dist\" />
     <Folder Include="css\" />
     <Folder Include="data\" />
     <Folder Include="js\localization\" />

@@ -307,6 +307,14 @@
       <Link>www\bomb.gif</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Content Include="..\FallingBlocks.Shared\bower_components\hammerjs\hammer.min.js">
+      <Link>www\bower_components\hammerjs\hammer.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallingBlocks.Shared\bower_components\html5shiv\dist\html5shiv.min.js">
+      <Link>www\bower_components\html5shiv\dist\html5shiv.min.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\FallingBlocks.Shared\css\dx.android.holo-dark.css">
       <Link>www\css\dx.android.holo-dark.css</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -651,6 +659,10 @@
     <Content Include="www\plugins\org.apache.cordova.network-information\www\network.js" />
     <Content Include="www\plugins\org.apache.cordova.splashscreen\www\splashscreen.js" />
     <Content Include="www\plugins\org.apache.cordova.vibration\www\vibration.js" />
+    <None Include="..\FallingBlocks.Shared\bower_components\hammerjs\hammer.min.map">
+      <Link>www\bower_components\hammerjs\hammer.min.map</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\FallingBlocks.Shared\views\View1.dxview">
       <Link>www\views\View1.dxview</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -677,7 +689,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="www\certificates\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

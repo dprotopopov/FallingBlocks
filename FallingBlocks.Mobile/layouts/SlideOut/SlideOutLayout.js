@@ -1,4 +1,4 @@
-(function($, DX, undefined) {
+﻿(function($, DX, undefined) {
     var translator = DX.translator,
         fx = DX.fx,
         VIEW_OFFSET = 40,
@@ -8,52 +8,52 @@
         ctor: function(options) {
             options = options || {};
             options.name = options.name || "slideout";
-            this.callBase(options)
+            this.callBase(options);
         },
         _createNavigationWidget: function() {
-            this.$slideOut = $("<div data-bind='dxSlideOut: {  menuItemTemplate: $(\"#slideOutMenuItemTemplate\") }'></div>").appendTo(this._$hiddenBag).dxCommandContainer({id: 'global-navigation'});
+            this.$slideOut = $("<div data-bind='dxSlideOut: {  menuItemTemplate: $(\"#slideOutMenuItemTemplate\") }'></div>").appendTo(this._$hiddenBag).dxCommandContainer({ id: 'global-navigation' });
             this._viewEngine._applyTemplate(this.$slideOut, this._layoutModel);
             this.callBase();
             this.slideOut = this.$slideOut.dxSlideOut("instance");
             this.$slideOut.find(".dx-slideout-item-container").append(this._$mainLayout);
-            return this.$slideOut
+            return this.$slideOut;
         },
         _renderNavigationImpl: function(navigationCommands) {
             var container = this.$slideOut.dxCommandContainer("instance");
-            this._commandManager._arrangeCommandsToContainers(navigationCommands, [container])
+            this._commandManager._arrangeCommandsToContainers(navigationCommands, [container]);
         },
         _getRootElement: function() {
-            return this.$slideOut
+            return this.$slideOut;
         },
         init: function(options) {
             this.callBase(options);
             this._navigationManager = options.navigationManager;
-            this._navigatingHandler = $.proxy(this._onNavigating, this)
+            this._navigatingHandler = $.proxy(this._onNavigating, this);
         },
         activate: function() {
             this.callBase.apply(this, arguments);
-            this._navigationManager.navigating.add(this._navigatingHandler)
+            this._navigationManager.navigating.add(this._navigatingHandler);
         },
         deactivate: function() {
             this.callBase.apply(this, arguments);
-            this._navigationManager.navigating.remove(this._navigatingHandler)
+            this._navigationManager.navigating.remove(this._navigatingHandler);
         },
         _onNavigating: function(args) {
             var that = this;
             if (this.slideOut.option("menuVisible"))
                 args.navigateWhen.push(this._toggleNavigation().done(function() {
-                    that._disableTransitions = true
-                }))
+                    that._disableTransitions = true;
+                }));
         },
         _onViewShown: function(viewInfo) {
             this._refreshVisibility();
-            this._disableTransitions = false
+            this._disableTransitions = false;
         },
         _refreshVisibility: function() {
             if (DX.devices.real().platform === "android") {
                 this.$slideOut.css("backface-visibility", "hidden");
                 this.$slideOut.css("backface-visibility");
-                this.$slideOut.css("backface-visibility", "visible")
+                this.$slideOut.css("backface-visibility", "visible");
             }
         },
         _isPlaceholderEmpty: function(viewInfo) {
@@ -61,9 +61,9 @@
             var toolbar = $markup.find(".layout-toolbar").data("dxToolbar");
             var items = toolbar.option("items");
             var backCommands = $.grep(items, function(item) {
-                    return (item.behavior === "back" || item.id === "back") && item.visible === true
-                });
-            return !backCommands.length
+                return (item.behavior === "back" || item.id === "back") && item.visible === true;
+            });
+            return !backCommands.length;
         },
         _onRenderComplete: function(viewInfo) {
             var that = this;
@@ -77,8 +77,8 @@
                 that._refreshAppbarVisibility(appbar, $content);
                 appbar.optionChanged.add(function(name, value) {
                     if (name === "items")
-                        that._refreshAppbarVisibility(appbar, $content)
-                })
+                        that._refreshAppbarVisibility(appbar, $content);
+                });
             }
         },
         _refreshAppbarVisibility: function(appbar, $content) {
@@ -86,34 +86,34 @@
             $.each(appbar.option("items"), function(index, item) {
                 if (item.visible) {
                     isAppbarNotEmpty = true;
-                    return false
+                    return false;
                 }
             });
             $content.toggleClass("has-toolbar-bottom", isAppbarNotEmpty);
-            appbar.option("visible", isAppbarNotEmpty)
+            appbar.option("visible", isAppbarNotEmpty);
         },
         _initNavigationButton: function($markup) {
             var that = this,
                 $toolbar = $markup.find(".layout-toolbar"),
                 toolbar = $toolbar.data("dxToolbar");
             var showNavButton = function($markup, $navButtonItem) {
-                    $navButtonItem = $navButtonItem || $toolbar.find(".nav-button-item");
-                    $navButtonItem.show();
-                    $navButtonItem.find(".nav-button").data("dxButton").option("clickAction", $.proxy(that._toggleNavigation, that, $markup))
-                };
+                $navButtonItem = $navButtonItem || $toolbar.find(".nav-button-item");
+                $navButtonItem.show();
+                $navButtonItem.find(".nav-button").data("dxButton").option("clickAction", $.proxy(that._toggleNavigation, that, $markup));
+            };
             showNavButton($markup);
             toolbar.option("itemRenderedAction", function(e) {
                 var data = e.itemData,
                     $element = e.itemElement;
                 if (data.template === "nav-button")
-                    $.proxy(showNavButton, that, $markup)()
-            })
+                    $.proxy(showNavButton, that, $markup)();
+            });
         },
         _initNavigation: function($markup) {
-            this._isNavigationVisible = false
+            this._isNavigationVisible = false;
         },
         _toggleNavigation: function($markup) {
-            return this.slideOut.toggleMenuVisibility()
+            return this.slideOut.toggleMenuVisibility();
         }
     });
     var layoutSets = DX.framework.html.layoutSets;
@@ -138,5 +138,5 @@
         platform: "win8",
         phone: true,
         controller: new DX.framework.html.SlideOutController
-    })
+    });
 })(jQuery, DevExpress);

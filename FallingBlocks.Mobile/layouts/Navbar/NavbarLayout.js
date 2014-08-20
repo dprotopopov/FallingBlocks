@@ -1,4 +1,4 @@
-(function($, DX, undefined) {
+﻿(function($, DX, undefined) {
     var HAS_NAVBAR_CLASS = "has-navbar",
         HAS_TOOLBAR_CLASS = "has-toolbar",
         HAS_TOOLBAR_BOTTOM_CLASS = "has-toolbar-bottom",
@@ -12,25 +12,25 @@
         ctor: function(options) {
             options = options || {};
             options.name = options.name || "navbar";
-            this.callBase(options)
+            this.callBase(options);
         },
         _createNavigationWidget: function(navigationCommands) {
             this.$navbar = this._$mainLayout.find(".navbar-container");
-            return this.$navbar
+            return this.$navbar;
         },
         _renderNavigationImpl: function(navigationCommands) {
             var container = this.$navbar.dxCommandContainer("instance");
             this._commandManager.renderCommandsToContainers(navigationCommands, [container]);
             if (navigationCommands.length)
-                this._$mainLayout.addClass(HAS_NAVBAR_CLASS)
+                this._$mainLayout.addClass(HAS_NAVBAR_CLASS);
         },
         _showViewImpl: function(viewInfo) {
             var that = this;
             return that.callBase.apply(that, arguments).done(function() {
-                    var $toolbar = that._$mainLayout.find(LAYOUT_FOOTER_SELECTOR).find(ACTIVE_TOOLBAR_SELECTOR),
-                        isToolbarEmpty = !$toolbar.length || !$toolbar.dxToolbar("instance").option("visible");
-                    that._$mainLayout.toggleClass(HAS_TOOLBAR_CLASS, !isToolbarEmpty)
-                })
+                var $toolbar = that._$mainLayout.find(LAYOUT_FOOTER_SELECTOR).find(ACTIVE_TOOLBAR_SELECTOR),
+                    isToolbarEmpty = !$toolbar.length || !$toolbar.dxToolbar("instance").option("visible");
+                that._$mainLayout.toggleClass(HAS_TOOLBAR_CLASS, !isToolbarEmpty);
+            });
         }
     });
     var layoutSets = DX.framework.html.layoutSets;
@@ -58,5 +58,5 @@
         root: true,
         pane: "master",
         controller: new DX.framework.html.NavBarController
-    })
+    });
 })(jQuery, DevExpress);

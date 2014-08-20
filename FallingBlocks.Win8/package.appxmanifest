@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="64189RBADESIGNLLC.FallingBlocks" Version="1.0.0.0" Publisher="CN=AF4638CB-3520-4C8D-AF2C-2103D90E5744" />
+  <Identity Name="64189RBADESIGNLLC.FallingBlocks" Version="1.0.0.1" Publisher="CN=AF4638CB-3520-4C8D-AF2C-2103D90E5744" />
   <Properties>
     <DisplayName>Falling Blocks</DisplayName>
     <PublisherDisplayName>RBA DESIGN LLC</PublisherDisplayName>

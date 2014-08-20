@@ -17,6 +17,10 @@
         <Project>ff26908f-13e6-4591-93d6-8a9fc0f7e46b</Project>
         <Path />
       </LinkDescription>
+      <LinkDescription>
+        <Project>a5bc6492-8a39-4f3b-b03a-108716cc7ced</Project>
+        <Path />
+      </LinkDescription>
     </Links>
     <XapPackagePublisherID>{b951d560-cd63-4fb1-bd9b-b27f5f409aa7}</XapPackagePublisherID>
     <XapPackageProductID>{ef7ac0f3-8806-4aea-a8c1-2d1886663a9f}</XapPackageProductID>
@@ -75,6 +79,15 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="bomb.gif">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="bower_components\hammerjs\hammer.min.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="bower_components\hammerjs\hammer.min.map">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="bower_components\html5shiv\dist\html5shiv.min.js">
       <SubType>Content</SubType>
     </Content>
     <Content Include="cyan.gif">
@@ -142,6 +155,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bower_components\" />
+    <Folder Include="bower_components\hammerjs\" />
+    <Folder Include="bower_components\html5shiv\" />
+    <Folder Include="bower_components\html5shiv\dist\" />
     <Folder Include="css\" />
     <Folder Include="data\" />
     <Folder Include="images\" />

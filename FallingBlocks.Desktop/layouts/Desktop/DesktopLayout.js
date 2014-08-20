@@ -1,4 +1,4 @@
-(function($, DX, undefined) {
+﻿(function($, DX, undefined) {
     var layoutSets = DX.framework.html.layoutSets;
     layoutSets["desktop"] = layoutSets["desktop"] || [];
     layoutSets["desktop"].push({
@@ -7,5 +7,5 @@
             name: "desktop",
             disableViewLoadingState: true
         })
-    })
+    });
 })(jQuery, DevExpress);

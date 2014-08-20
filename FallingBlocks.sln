@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Falling Blocks.htm = Falling Blocks.htm
 	EndProjectSection
 EndProject
+Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "FallingBlocks.Win81", "FallingBlocks.Win81\FallingBlocks.Win81.jsproj", "{A5BC6492-8A39-4F3B-B03A-108716CC7CED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,30 @@ Global
 		{EEBF619C-BE6A-4802-A9C8-CACA44F76718}.Release|x86.ActiveCfg = Release|x86
 		{EEBF619C-BE6A-4802-A9C8-CACA44F76718}.Release|x86.Build.0 = Release|x86
 		{EEBF619C-BE6A-4802-A9C8-CACA44F76718}.Release|x86.Deploy.0 = Release|x86
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|ARM.ActiveCfg = Debug|ARM
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|ARM.Build.0 = Debug|ARM
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|ARM.Deploy.0 = Debug|ARM
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|x64.ActiveCfg = Debug|x64
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|x64.Build.0 = Debug|x64
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|x64.Deploy.0 = Debug|x64
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|x86.ActiveCfg = Debug|x86
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|x86.Build.0 = Debug|x86
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Debug|x86.Deploy.0 = Debug|x86
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|ARM.ActiveCfg = Release|ARM
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|ARM.Build.0 = Release|ARM
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|ARM.Deploy.0 = Release|ARM
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|x64.ActiveCfg = Release|x64
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|x64.Build.0 = Release|x64
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|x64.Deploy.0 = Release|x64
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|x86.ActiveCfg = Release|x86
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|x86.Build.0 = Release|x86
+		{A5BC6492-8A39-4F3B-B03A-108716CC7CED}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
